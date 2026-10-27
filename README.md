@@ -14,6 +14,7 @@ Pipeline ETL dữ liệu Candy Crush Saga và kết quả xổ số miền Bắc
 │   └── .airflowignore      # báo Airflow bỏ qua thư mục không chứa DAG
 ├── tests/unit/             # unit test, chạy không cần Airflow
 ├── .github/workflows/      # ci.yml, cd.yml
+├── calculator.py           # module cộng hai số, dùng thực hành Git workflow
 ├── docker-compose.yaml     # cụm Airflow (scheduler, worker, api-server, postgres, redis)
 ├── Dockerfile              # image Airflow + provider Google
 ├── requirements.txt        # thư viện cài vào image
@@ -71,3 +72,35 @@ Secret cần khai báo trong Settings → Secrets and variables → Actions:
 | `VM_SSH_KEY` | private key dành riêng cho GitHub Actions |
 
 `.env` và `secrets/gcp-sa.json` không bao giờ lên GitHub, tạo tay trên VM một lần.
+
+## Module calculator
+
+`calculator.py` là module Python đơn giản dùng để thực hành Git workflow trong Câu 2 của Lesson 16. Module chạy độc lập, không cần Airflow hay thư viện bên ngoài.
+
+Function chính: `add(a, b)` nhận hai số `a`, `b` và trả về tổng của chúng.
+
+| Input | Output mong đợi |
+|---|---|
+| `add(2, 3)` | `5` |
+| `add(-2, 3)` | `1` |
+| `add(0, 0)` | `0` |
+
+Chạy từ thư mục gốc của project:
+
+```bash
+python3 calculator.py
+```
+
+Kết quả mong đợi:
+
+```text
+5
+```
+
+Có thể gọi trực tiếp function để kiểm tra input khác:
+
+```bash
+python3 -c "from calculator import add; print(add(-2, 3))"
+```
+
+Kết quả mong đợi: `1`.
